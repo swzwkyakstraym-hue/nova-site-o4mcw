@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta name="description" content="لعبه حجره ورقه مقص">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>حجر ورقة مقص</title>
+<style>
+:root{--bg:#f4f1ea;--card:#fff;--text:#1d1d1f;--muted:#6b6b70;--accent:#e4572e;--win:#2e9e5b;--lose:#d64545;--tie:#8a8a90;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17171a;--card:#232328;--text:#f2f2f4;--muted:#9a9aa2;--accent:#ff7a4d}}
+:root[data-theme="dark"]{--bg:#17171a;--card:#232328;--text:#f2f2f4;--muted:#9a9aa2;--accent:#ff7a4d}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI",Tahoma,Arial,sans-serif;min-height:100vh;display:flex;justify-content:center;padding:20px}
+main{width:100%;max-width:440px;text-align:center}
+h1{font-size:1.6rem;margin:8px 0 4px}
+p.sub{color:var(--muted);margin:0 0 20px}
+.score{display:flex;gap:10px;margin-bottom:20px}
+.score div{flex:1;background:var(--card);border-radius:14px;padding:12px}
+.score b{display:block;font-size:1.8rem}
+.score span{color:var(--muted);font-size:.85rem}
+.arena{background:var(--card);border-radius:18px;padding:20px;margin-bottom:20px;min-height:170px}
+.faces{display:flex;justify-content:space-around;font-size:3.4rem;margin-bottom:10px}
+.faces small{display:block;font-size:.8rem;color:var(--muted)}
+#msg{font-size:1.3rem;font-weight:700;min-height:1.8rem}
+.btns{display:flex;gap:10px}
+.btns button{flex:1;font-size:2.2rem;padding:16px 4px;border:2px solid transparent;border-radius:16px;background:var(--card);color:var(--text);cursor:pointer;transition:transform .1s,border-color .1s}
+.btns button span{display:block;font-size:.9rem;margin-top:4px}
+.btns button:hover{border-color:var(--accent)}
+.btns button:active{transform:scale(.94)}
+#reset{margin-top:18px;background:none;border:1px solid var(--muted);color:var(--muted);padding:10px 22px;border-radius:999px;font-size:1rem;cursor:pointer}
+.win{color:var(--win)}.lose{color:var(--lose)}.tie{color:var(--tie)}
+</style>
+</head>
+<body>
+<main>
+<h1>✊ حجر ورقة مقص ✌️</h1>
+<p class="sub">اختر وتحدَّ الكمبيوتر!</p>
+<div class="score">
+<div><b id="w">0</b><span>فوز</span></div>
+<div><b id="t">0</b><span>تعادل</span></div>
+<div><b id="l">0</b><span>خسارة</span></div>
+</div>
+<div class="arena">
+<div class="faces"><div id="me">❔<small>أنت</small></div><div id="cpu">❔<small>الكمبيوتر</small></div></div>
+<div id="msg">اضغط على أحد الأزرار</div>
+</div>
+<div class="btns">
+<button onclick="play(0)">✊<span>حجر</span></button>
+<button onclick="play(1)">✋<span>ورقة</span></button>
+<button onclick="play(2)">✌️<span>مقص</span></button>
+</div>
+<button id="reset" onclick="resetGame()">إعادة اللعب</button>
+</main>
+<script>
+const E=['✊','✋','✌️'];let s={w:0,t:0,l:0};
+function play(p){
+  const c=Math.floor(Math.random()*3);
+  const r=(p-c+3)%3; // 0 tie, 1 win, 2 lose
+  document.getElementById('me').firstChild.textContent=E[p];
+  document.getElementById('cpu').firstChild.textContent=E[c];
+  const m=document.getElementById('msg');
+  if(r===0){s.t++;m.textContent='تعادل 🤝';m.className='tie'}
+  else if(r===1){s.w++;m.textContent='فزت! 🎉';m.className='win'}
+  else{s.l++;m.textContent='خسرت 😅';m.className='lose'}
+  show();
+}
+function show(){w.textContent=s.w;t.textContent=s.t;l.textContent=s.l}
+function resetGame(){s={w:0,t:0,l:0};show();
+  document.getElementById('me').firstChild.textContent='❔';
+  document.getElementById('cpu').firstChild.textContent='❔';
+  const m=document.getElementById('msg');m.textContent='اضغط على أحد الأزرار';m.className=''}
+</script>
+</body>
+</html>
